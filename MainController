@@ -1,0 +1,46 @@
+//after 1.2.25 angular doesn't support global controllers
+
+
+(function() {
+  var app = angular.module("githubViewer");
+  
+  var MainController = function($scope, github,$interval,$location) //$http yerine kendi yazdığımız github servisini ekledim 
+  {
+
+   // $http.get("https://api.github.com/users/angular").then(onUserComplete, onError);
+
+   // $scope.message = "Hello angular";
+
+    var decrementCountDown=function(){
+      $scope.countdown-=1;
+      if($scope.countdown<1){
+      $scope.search($scope.username);
+      }
+    };
+    
+    var countdownInterval=null; //bunu eğer saniye beklemeden search yapımışsa timerı durudumak için kullanıcaz
+    var startCountdown=function(){
+       countdownInterval=$interval(decrementCountDown,1000,$scope.countdown);
+    };
+    
+    $scope.search = function(username) {
+      // $log.info("Searching for "+username);
+     // github.getUser(username).then(onUserComplete, onError);
+      
+      if(countdownInterval){ //search yapıldığı anda bu objeden varsa iptal et
+         $interval.cancel(countdownInterval);
+         $scope.countdown=null; //countdownı ekrandan kaldırmak için
+      }
+      $location.path("/user/"+username);
+    };
+    
+    $scope.username="angular";
+    $scope.countdown=5;
+    startCountdown();
+  };
+  app.controller("MainController",  MainController);
+  // app.controller("MainController", ["$scope", "$http","$interval","$log", MainController]);
+  //bu yukarıdakıne eşit yuarıdakini servislere ayrı isimler vermke istersek kullanıyoruz app.controller(MainController]);
+}());
+
+//ng-app vs.. dışında custom directiveler ve third part directives kullanılabilir
