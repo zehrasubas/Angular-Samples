@@ -1,0 +1,38 @@
+<div>
+  <!--truthiness ng-show ve hide true false olarak çalışır burada user dememizin sebebi user henüz oluşmamışsa undefineddır ve undefined js için falsetur !-->
+  {{error}}
+  <h1>{{user.name}}</h1>
+  <div>
+    <img ng-src="{{user.avatar_url}}" title="{{user.name}}">
+  </div>
+  Order:
+  <select ng-model="repoSortOrder">
+    <option value="+name">Name</option>
+    <option value="-stargazers_count">Stars</option>
+    <option value="+language">Language</option>
+  </select>
+</div>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Stars</th>
+      <th>Language</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="repo in repos | orderBy:repoSortOrder">
+      <!--başına eksi koyulursa asc order by yapıyor + koyulursa desc yapıyor default desc!-->
+      <!--!orderBy:'-stargazers_count' =orderBy:repoSortOrder-->
+      <td>
+        <a href="#/repo/{{user.login}}/{{repo.name}}">
+       {{repo.name}}
+        </a>
+      </td>
+      <td>{{repo.stargazers_count}}</td>
+      <td>{{repo.language}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<a href="#/main">Back to search</a>
