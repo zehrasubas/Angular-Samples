@@ -1,0 +1,22 @@
+//Immediatelly Invoked Function Expression
+
+(function() { // using only one global variable
+  var program = function() {
+    var a = function() {
+      console.log("IIFEa");
+    };
+
+    var b = function() {
+      console.log("IIFEb");
+    };
+
+    return {
+      aBridge: a,
+      bBridge: b
+    }
+  }
+
+  var pr = program();
+  pr.aBridge();
+  pr.bBridge();
+})();
