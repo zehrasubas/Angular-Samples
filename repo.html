@@ -1,0 +1,16 @@
+<h2>{{repo.name}}</h2>
+
+<div>
+  Issues:{{repo.open_issues_count}}
+</div>
+
+<div>
+  <ul>
+    <li ng-repat="user in repo.collabarators">
+      {{user.login}}
+    </li>
+  </ul>
+</div>
+
+<a href="#/main"> Back to the search</a>
+<a href="#/user/{{repo.owner.login}}"> Back to the {{repo.owner.login}}</a>
